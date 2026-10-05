@@ -6,6 +6,8 @@ coverage/
 *.log
 bun.lock
 bun.lockb
+package-lock.json
+npm-shrinkwrap.json
 .env*
 !.env.example
 firebase-applet-config.json
