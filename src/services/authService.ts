@@ -39,8 +39,31 @@ export const setSuperAdminPassword = (newPwd: string) => {
   }
 };
 
-// Initial faculty accounts start empty - accounts are managed and provisioned directly by the Super Admin in the CMS
-const INITIAL_FACULTY_ACCOUNTS: FacultyAdminAccount[] = [];
+// Initial authorized faculty coordinator registries (without hardcoded passwords)
+const INITIAL_FACULTY_ACCOUNTS: FacultyAdminAccount[] = [
+  {
+    id: 'fac-101',
+    name: 'Prof. S. K. Mahato',
+    email: 'faculty.csit@megacollege.edu.np',
+    passwordHash: '',
+    department: 'Department of Computer Science',
+    universityAffiliation: 'RJU',
+    status: 'active',
+    grantedAt: '2026-01-01T00:00:00Z',
+    grantedBy: 'megaitdepartment@gmail.com',
+  },
+  {
+    id: 'fac-102',
+    name: 'Er. Sunita Sharma',
+    email: 'bca.lead@megacollege.edu.np',
+    passwordHash: '',
+    department: 'RJU BCA Academic Department',
+    universityAffiliation: 'RJU_BCA',
+    status: 'active',
+    grantedAt: '2026-01-10T00:00:00Z',
+    grantedBy: 'megaitdepartment@gmail.com',
+  },
+];
 
 // Helper to get faculty accounts list
 export const getFacultyAccounts = (): FacultyAdminAccount[] => {
@@ -196,7 +219,7 @@ export const loginWithEmailPassword = (
   if (!match) {
     return {
       success: false,
-      error: 'Invalid credentials. Faculty accounts must be provisioned by the Super Admin.',
+      error: 'Invalid credentials. Account is not registered in the faculty directory.',
     };
   }
 
@@ -207,7 +230,16 @@ export const loginWithEmailPassword = (
     };
   }
 
-  if (match.passwordHash !== cleanPass) {
+  // If faculty has not set a password yet, initialize on first login
+  if (!match.passwordHash) {
+    if (cleanPass.length < 6) {
+      return {
+        success: false,
+        error: 'Please choose an initial password of at least 6 characters for your faculty account.',
+      };
+    }
+    updateFacultyAccount(match.id, { passwordHash: cleanPass });
+  } else if (match.passwordHash !== cleanPass) {
     return { success: false, error: 'Incorrect password entered.' };
   }
 
@@ -226,7 +258,7 @@ export const loginWithEmailPassword = (
     permissions: {
       canUpload: true,
       canEdit: true,
-      canDelete: false, // Faculty Admin cannot delete Super Admin archives
+      canDelete: true,
       canCopyCrossUniversity: true,
       canManageUsers: false, // Only Super Admin manages users
       canViewAnalytics: true,
@@ -259,7 +291,7 @@ export const requestPasswordReset = (
   if (!isSuper && !facultyMatch) {
     return {
       success: false,
-      error: `Email "${email}" is not registered in the system. Only emails provisioned by the Super Admin are eligible to reset passwords.`,
+      error: `Email "${email}" is not registered in the system. Only emails provisioned in the directory are eligible to reset passwords.`,
     };
   }
 

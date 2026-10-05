@@ -37,6 +37,7 @@ export const FacultyUserManagerModal: React.FC<FacultyUserManagerModalProps> = (
   const [accounts, setAccounts] = useState<FacultyAdminAccount[]>(() => getFacultyAccounts());
   const [isAdding, setIsAdding] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
   const [newPassword, setNewPassword] = useState('');
 
   // Super Admin password state
@@ -109,11 +110,10 @@ export const FacultyUserManagerModal: React.FC<FacultyUserManagerModalProps> = (
   };
 
   const handleDelete = (id: string, name: string) => {
-    if (confirm(`Are you sure you want to permanently delete faculty admin ${name}?`)) {
-      deleteFacultyAccount(id);
-      setAccounts(getFacultyAccounts());
-      setSuccess(`Account for ${name} removed.`);
-    }
+    deleteFacultyAccount(id);
+    setAccounts(getFacultyAccounts());
+    setDeletingId(null);
+    setSuccess(`Account for ${name} removed.`);
   };
 
   return (
@@ -383,13 +383,34 @@ export const FacultyUserManagerModal: React.FC<FacultyUserManagerModalProps> = (
                       <KeyRound className="w-3.5 h-3.5" />
                     </button>
 
-                    <button
-                      onClick={() => handleDelete(acc.id, acc.name)}
-                      className="p-1.5 rounded-lg bg-rose-50 dark:bg-rose-500/15 text-rose-600 dark:text-rose-400 hover:bg-rose-100"
-                      title="Delete Faculty Account"
-                    >
-                      <Trash2 className="w-3.5 h-3.5" />
-                    </button>
+                    {deletingId === acc.id ? (
+                      <div className="flex items-center gap-1 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-500/30 p-1 rounded-lg animate-in fade-in duration-100">
+                        <span className="text-[10px] text-rose-700 dark:text-rose-300 font-bold px-1">Delete?</span>
+                        <button
+                          type="button"
+                          onClick={() => handleDelete(acc.id, acc.name)}
+                          className="px-1.5 py-0.5 rounded bg-rose-600 hover:bg-rose-700 text-white font-bold text-[10px] cursor-pointer"
+                        >
+                          Yes
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setDeletingId(null)}
+                          className="px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 text-[10px] cursor-pointer"
+                        >
+                          No
+                        </button>
+                      </div>
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={() => setDeletingId(acc.id)}
+                        className="p-1.5 rounded-lg bg-rose-50 dark:bg-rose-500/15 text-rose-600 dark:text-rose-400 hover:bg-rose-100 cursor-pointer"
+                        title="Delete Faculty Account"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                      </button>
+                    )}
                   </div>
                 </div>
 

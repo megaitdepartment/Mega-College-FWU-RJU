@@ -353,13 +353,13 @@ export default function App() {
   };
 
   const handleDeleteResource = (resourceId: string) => {
-    if (!currentUser || currentUser.role !== 'super_admin') {
-      alert('Only Super Admin is authorized to delete resources from the repository.');
+    if (!currentUser) {
+      addToast('error', 'Authentication Required', 'Please log in to manage archive resources.');
       return;
     }
     setResources((prev) => prev.filter((r) => r.id !== resourceId));
     offlineStorage.removeResourceOffline(resourceId);
-    addToast('info', 'Resource Deleted', 'The document was removed by Super Admin.');
+    addToast('info', 'Resource Deleted', 'The document has been removed from the archive.');
   };
 
   const handleToggleStatus = (resourceId: string) => {

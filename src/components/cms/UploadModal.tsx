@@ -65,6 +65,7 @@ export const UploadModal: React.FC<UploadModalProps> = ({
   const [solutionWebLink, setSolutionWebLink] = useState('');
   const [solutionVideoLink, setSolutionVideoLink] = useState('');
   const [referenceNotes, setReferenceNotes] = useState('');
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const [isUploading, setIsUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -218,7 +219,7 @@ export const UploadModal: React.FC<UploadModalProps> = ({
       onSaveResource(newResource);
       onClose();
     } catch (err: any) {
-      alert(`Upload error: ${err.message}`);
+      setErrorMessage(err.message || 'Failed to upload resource to archive.');
     } finally {
       setIsUploading(false);
     }
@@ -253,6 +254,13 @@ export const UploadModal: React.FC<UploadModalProps> = ({
 
         {/* Scrollable Form Body */}
         <form onSubmit={handleSubmit} className="p-6 overflow-y-auto space-y-5 flex-1 text-xs">
+          {errorMessage && (
+            <div className="p-3 rounded-xl bg-rose-50 dark:bg-rose-500/10 border border-rose-200 dark:border-rose-500/30 text-rose-800 dark:text-rose-300 text-xs flex items-center gap-2 animate-in fade-in duration-150">
+              <AlertCircle className="w-4 h-4 shrink-0 text-rose-600" />
+              <span>{errorMessage}</span>
+            </div>
+          )}
+
           {/* Target Course / University */}
           <div className="space-y-1.5">
             <label className="font-bold text-slate-700 dark:text-slate-300">
