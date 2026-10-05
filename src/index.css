@@ -1,0 +1,133 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  :root {
+    --brand-primary: #00c288;
+    --brand-primary-hover: #00a876;
+    --brand-secondary: #00d2d3;
+    --brand-accent: #0284c7;
+    --brand-dark: #0b0f19;
+    --brand-surface-light: #ffffff;
+    --brand-surface-dark: #111827;
+  }
+
+  html {
+    overflow-x: hidden;
+    max-width: 100%;
+    width: 100%;
+    -webkit-text-size-adjust: 100%;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    overflow-x: hidden;
+    max-width: 100%;
+    width: 100%;
+    position: relative;
+    touch-action: manipulation;
+    box-sizing: border-box;
+  }
+
+  #root {
+    overflow-x: hidden;
+    max-width: 100%;
+    width: 100%;
+    min-height: 100vh;
+    box-sizing: border-box;
+  }
+
+  code, pre, kbd {
+    font-family: 'JetBrains Mono', monospace;
+    word-break: break-all;
+  }
+
+  *, ::before, ::after {
+    box-sizing: border-box;
+  }
+
+  img, video, canvas, svg {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+/* Custom modern scrollbar for light & dark mode */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+.dark ::-webkit-scrollbar-track,
+html.dark ::-webkit-scrollbar-track {
+  background: #0b0f19;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 9999px;
+}
+
+.dark ::-webkit-scrollbar-thumb,
+html.dark ::-webkit-scrollbar-thumb {
+  background: rgba(0, 194, 136, 0.35);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover,
+html.dark ::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 194, 136, 0.7);
+}
+
+/* OpenPTE Badges & Highlights */
+.openpte-badge {
+  background-color: #ecfdf5;
+  color: #047857;
+  border: 1px solid #a7f3d0;
+}
+
+.dark .openpte-badge,
+html.dark .openpte-badge {
+  background-color: rgba(0, 194, 136, 0.15);
+  color: #34d399;
+  border-color: rgba(0, 194, 136, 0.35);
+}
+
+/* Document Paper Texture for High-Res Academic Viewers */
+.exam-paper-canvas {
+  background-color: #ffffff;
+  color: #0f172a;
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(226, 232, 240, 0.9);
+}
+
+.dark .exam-paper-canvas,
+html.dark .exam-paper-canvas {
+  background-color: #0f172a;
+  color: #f8fafc;
+  box-shadow: 0 10px 35px -5px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(51, 65, 85, 0.8);
+}
+
+/* Inverted high-contrast dark reading mode */
+.exam-paper-darkmode-inverted {
+  background-color: #070a12 !important;
+  color: #f1f5f9 !important;
+  box-shadow: 0 0 0 1px rgba(0, 194, 136, 0.3) !important;
+}
+
+/* Dark mode ambient glows */
+.dark-glow-emerald {
+  box-shadow: 0 0 30px -5px rgba(0, 194, 136, 0.25);
+}
+
+.dark-glow-cyan {
+  box-shadow: 0 0 30px -5px rgba(0, 210, 211, 0.25);
+}
