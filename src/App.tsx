@@ -1,7 +1,7 @@
 /**
  * Mega College Academic Archive
  * Official Structured Archive for FWU B.Sc.CSIT, RJU B.Sc.CSIT, and RJU BCA.
- * 2-Role RBAC: Super Admin & Faculty Admin (managed exclusively by Super Admin via Email & Password or Google Sign-In)
+ * 2-Role RBAC: Super Admin & Faculty Admin (managed exclusively by Super Admin via Email & Password)
  * Google Drive Cloud Storage Integration: Mega Document Drive/{Course}/{Semester}/{Subject}/...
  */
 
@@ -103,33 +103,8 @@ export default function App() {
   });
 
   // 2-Role Authenticated Session Profile (Super Admin or Faculty Admin)
-  // Default to Super Admin so reviewer can immediately see all admin features, with ability to switch/logout
   const [currentUser, setCurrentUser] = useState<UserProfile | null>(() => {
-    const existing = getActiveSessionProfile();
-    if (existing) return existing;
-
-    // Provide default initial Super Admin session for immediate full access
-    const defaultSuperAdmin: UserProfile = {
-      id: 'super-admin-01',
-      name: 'Mega IT Head (Super Admin)',
-      email: 'megaitdepartment@gmail.com',
-      role: 'super_admin',
-      avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80',
-      department: 'Department of Information Technology',
-      universityAffiliation: 'MEGA',
-      authMethod: 'password',
-      permissions: {
-        canUpload: true,
-        canEdit: true,
-        canDelete: true,
-        canCopyCrossUniversity: true,
-        canManageUsers: true,
-        canViewAnalytics: true,
-        canManageGoogleDrive: true,
-      },
-    };
-    setActiveSessionProfile(defaultSuperAdmin);
-    return defaultSuperAdmin;
+    return getActiveSessionProfile();
   });
 
   // Offline items state
@@ -735,7 +710,7 @@ export default function App() {
         />
       )}
 
-      {/* 6. Admin Authentication Modal (Google Sign-In + Email/Password) */}
+      {/* 6. Admin Authentication Modal (Email & Password) */}
       <AuthLoginModal
         isOpen={isLoginOpen}
         onClose={() => setIsLoginOpen(false)}

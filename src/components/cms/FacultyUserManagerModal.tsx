@@ -42,7 +42,6 @@ export const FacultyUserManagerModal: React.FC<FacultyUserManagerModalProps> = (
   // Super Admin password state
   const [isEditingSuperPwd, setIsEditingSuperPwd] = useState(false);
   const [superAdminPwdInput, setSuperAdminPwdInput] = useState('');
-  const [currentSuperPwd, setCurrentSuperPwd] = useState(() => getSuperAdminPassword());
 
   // Form states
   const [name, setName] = useState('');
@@ -104,7 +103,6 @@ export const FacultyUserManagerModal: React.FC<FacultyUserManagerModalProps> = (
       return;
     }
     setSuperAdminPassword(superAdminPwdInput.trim());
-    setCurrentSuperPwd(superAdminPwdInput.trim());
     setIsEditingSuperPwd(false);
     setSuperAdminPwdInput('');
     setSuccess('Super Admin master password updated successfully.');
@@ -132,7 +130,7 @@ export const FacultyUserManagerModal: React.FC<FacultyUserManagerModalProps> = (
                 Faculty Admin Access &amp; Credential Manager
               </h3>
               <p className="text-xs text-slate-500 dark:text-slate-400">
-                Super Admin only: Provision email &amp; password or Google Sign-In access for Faculty Admins
+                Super Admin only: Provision email &amp; password access for Faculty Admins
               </p>
             </div>
           </div>
@@ -224,7 +222,7 @@ export const FacultyUserManagerModal: React.FC<FacultyUserManagerModalProps> = (
                 Active Faculty Admins ({accounts.length})
               </span>
               <p className="text-[11px] text-slate-500 dark:text-slate-400">
-                Only accounts listed here can access the CMS, upload papers, or authenticate with Google Sign-In.
+                Only accounts listed here can access the CMS and manage curriculum resources.
               </p>
             </div>
 

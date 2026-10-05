@@ -58,7 +58,7 @@ export const RoleManagerModal: React.FC<RoleManagerModalProps> = ({
       title: 'Faculty Admin (Subject Coordinator)',
       badge: 'Authorized by Super Admin',
       description:
-        'Access is granted by Super Admin only using email & password or verified Google Sign-In. Can upload past questions (PDF or JPG/JPEG/PNG only) to Google Drive, provide reference & solution links, and manage curriculum.',
+        'Access is granted by Super Admin only using official email and password. Can upload past questions (PDF or JPG/JPEG/PNG only) to Google Drive, provide reference & solution links, and manage curriculum.',
       color:
         'border-emerald-300 dark:border-emerald-500/40 bg-emerald-50 dark:bg-emerald-500/10 text-emerald-800 dark:text-emerald-300',
       permissions: [

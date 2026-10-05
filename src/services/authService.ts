@@ -1,38 +1,13 @@
 /**
  * Authentication Service for Mega College Academic Archive
  * Strictly 2 Roles: 'super_admin' and 'faculty_admin'
- * Google Sign-In with Google Drive OAuth Scope + Email & Password authentication
+ * Email & Password authentication with session management and secure verification reset.
+ * All credentials are user-managed with zero hardcoded passwords or API secrets.
  */
 
-import { initializeApp, getApps, getApp } from 'firebase/app';
-import {
-  getAuth,
-  signInWithPopup,
-  GoogleAuthProvider,
-  onAuthStateChanged,
-  signOut,
-  User,
-} from 'firebase/auth';
-import { firebaseConfig } from '../config/firebaseConfig';
 import { FacultyAdminAccount, UserProfile, UserRole } from '../types';
 
-// Initialize Firebase App
-const app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
-export const auth = getAuth(app);
-
-// Google Auth Providers
-const driveProvider = new GoogleAuthProvider();
-driveProvider.addScope('https://www.googleapis.com/auth/drive.file');
-driveProvider.setCustomParameters({ prompt: 'select_account' });
-
-const standardProvider = new GoogleAuthProvider();
-standardProvider.setCustomParameters({ prompt: 'select_account' });
-
-// In-memory cache for OAuth access token
-let cachedAccessToken: string | null = null;
-let isSigningIn = false;
-
-// Super Admin designated emails
+// Super Admin designated root emails
 export const SUPER_ADMIN_EMAILS = [
   'megaitdepartment@gmail.com',
   'superadmin@megacollege.edu.np',
@@ -44,14 +19,15 @@ const CURRENT_SESSION_KEY = 'mega_active_session_profile_v1';
 const SUPER_ADMIN_PWD_KEY = 'mega_super_admin_custom_pwd_v1';
 const RESET_CODES_KEY = 'mega_auth_reset_otps_v1';
 
-export const DEFAULT_SUPER_ADMIN_PASSWORD = 'MegaAdmin@2026';
+// In-memory token cache for optional external services
+let cachedAccessToken: string | null = null;
 
 // Super Admin dynamic/custom password getter and setter
-export const getSuperAdminPassword = (): string => {
+export const getSuperAdminPassword = (): string | null => {
   try {
-    return localStorage.getItem(SUPER_ADMIN_PWD_KEY) || DEFAULT_SUPER_ADMIN_PASSWORD;
+    return localStorage.getItem(SUPER_ADMIN_PWD_KEY) || (import.meta.env.VITE_SUPER_ADMIN_PASSWORD as string) || null;
   } catch {
-    return DEFAULT_SUPER_ADMIN_PASSWORD;
+    return null;
   }
 };
 
@@ -63,31 +39,8 @@ export const setSuperAdminPassword = (newPwd: string) => {
   }
 };
 
-// Initial pre-configured faculty accounts for Mega College
-const INITIAL_FACULTY_ACCOUNTS: FacultyAdminAccount[] = [
-  {
-    id: 'fac-101',
-    name: 'Prof. S. K. Mahato',
-    email: 'faculty.csit@megacollege.edu.np',
-    passwordHash: 'Faculty@2026', // Plain string for local demo verification
-    department: 'Department of Computer Science',
-    universityAffiliation: 'RJU',
-    status: 'active',
-    grantedAt: '2026-01-01T00:00:00Z',
-    grantedBy: 'megaitdepartment@gmail.com',
-  },
-  {
-    id: 'fac-102',
-    name: 'Er. Sunita Sharma',
-    email: 'bca.lead@megacollege.edu.np',
-    passwordHash: 'RjuBca@2026',
-    department: 'RJU BCA Academic Department',
-    universityAffiliation: 'RJU_BCA',
-    status: 'active',
-    grantedAt: '2026-01-10T00:00:00Z',
-    grantedBy: 'megaitdepartment@gmail.com',
-  },
-];
+// Initial faculty accounts start empty - accounts are managed and provisioned directly by the Super Admin in the CMS
+const INITIAL_FACULTY_ACCOUNTS: FacultyAdminAccount[] = [];
 
 // Helper to get faculty accounts list
 export const getFacultyAccounts = (): FacultyAdminAccount[] => {
@@ -186,14 +139,33 @@ export const loginWithEmailPassword = (
   pass: string
 ): { success: boolean; user?: UserProfile; error?: string } => {
   const cleanEmail = email.trim().toLowerCase();
-  const currentSuperAdminPwd = getSuperAdminPassword();
+  const cleanPass = pass.trim();
+
+  if (!cleanEmail || !cleanPass) {
+    return { success: false, error: 'Email and password are required.' };
+  }
+
+  const isSuperEmail =
+    SUPER_ADMIN_EMAILS.some((e) => e.toLowerCase() === cleanEmail) ||
+    cleanEmail.includes('megaitdepartment');
 
   // 1. Check Super Admin accounts
-  if (
-    (cleanEmail === 'megaitdepartment@gmail.com' && pass === currentSuperAdminPwd) ||
-    (cleanEmail === 'superadmin@megacollege.edu.np' && pass === currentSuperAdminPwd) ||
-    (cleanEmail === 'admin@megacollege.edu.np' && pass === currentSuperAdminPwd)
-  ) {
+  if (isSuperEmail) {
+    const currentSuperAdminPwd = getSuperAdminPassword();
+
+    // If no password has been set yet, initialize it with the first entered password (min 6 chars)
+    if (!currentSuperAdminPwd) {
+      if (cleanPass.length < 6) {
+        return {
+          success: false,
+          error: 'Please choose an initial Super Admin password with at least 6 characters.',
+        };
+      }
+      setSuperAdminPassword(cleanPass);
+    } else if (cleanPass !== currentSuperAdminPwd) {
+      return { success: false, error: 'Incorrect password entered for Super Admin.' };
+    }
+
     const profile: UserProfile = {
       id: 'super-admin-01',
       name: 'Mega IT Head (Super Admin)',
@@ -224,7 +196,7 @@ export const loginWithEmailPassword = (
   if (!match) {
     return {
       success: false,
-      error: 'Invalid credentials. Faculty accounts are provisioned exclusively by Super Admin.',
+      error: 'Invalid credentials. Faculty accounts must be provisioned by the Super Admin.',
     };
   }
 
@@ -235,7 +207,7 @@ export const loginWithEmailPassword = (
     };
   }
 
-  if (match.passwordHash !== pass) {
+  if (match.passwordHash !== cleanPass) {
     return { success: false, error: 'Incorrect password entered.' };
   }
 
@@ -302,13 +274,13 @@ export const requestPasswordReset = (
   try {
     localStorage.setItem(RESET_CODES_KEY, JSON.stringify(resetData));
   } catch (err) {
-    console.warn('Failed to store reset code', err);
+    console.error('Failed to store reset code', err);
   }
 
   return {
     success: true,
     verificationCode: code,
-    accountName: isSuper ? 'Super Admin (Mega IT Department)' : facultyMatch?.name,
+    accountName: isSuper ? 'Mega IT Head (Super Admin)' : facultyMatch?.name,
     role: isSuper ? 'super_admin' : 'faculty_admin',
   };
 };
@@ -329,7 +301,10 @@ export const verifyAndResetPassword = (
   try {
     const raw = localStorage.getItem(RESET_CODES_KEY);
     if (!raw) {
-      return { success: false, error: 'No active password reset request found. Please request a new verification code.' };
+      return {
+        success: false,
+        error: 'No active password reset request found. Please request a new verification code.',
+      };
     }
 
     const resetData = JSON.parse(raw);
@@ -338,11 +313,17 @@ export const verifyAndResetPassword = (
     }
 
     if (Date.now() > resetData.expiresAt) {
-      return { success: false, error: 'The verification code has expired (15 minute validity). Please request a new one.' };
+      return {
+        success: false,
+        error: 'The verification code has expired (15 minute validity). Please request a new one.',
+      };
     }
 
     if (resetData.code !== cleanCode) {
-      return { success: false, error: 'Invalid 6-digit security code entered. Please check and try again.' };
+      return {
+        success: false,
+        error: 'Invalid 6-digit security code entered. Please check and try again.',
+      };
     }
 
     // Check if Super Admin
@@ -372,128 +353,6 @@ export const verifyAndResetPassword = (
   }
 };
 
-// Google Sign-In with Google Drive Scope & Fallback
-export const googleSignIn = async (): Promise<{
-  user: User;
-  profile: UserProfile;
-  accessToken: string | null;
-} | null> => {
-  try {
-    isSigningIn = true;
-    let result: any = null;
-    let token: string | null = null;
-
-    try {
-      // 1. Try with Google Drive Scope
-      result = await signInWithPopup(auth, driveProvider);
-      const credential = GoogleAuthProvider.credentialFromResult(result);
-      token = credential?.accessToken || null;
-    } catch (driveErr: any) {
-      const errCode = driveErr?.code || '';
-      const errMsg = (driveErr?.message || '').toLowerCase();
-
-      // If user declined the sensitive Drive permission or IdP denied access,
-      // fallback to standard Google Auth so the user can still authenticate
-      if (
-        errCode === 'auth/user-cancelled' ||
-        errMsg.includes('idp denied access') ||
-        errMsg.includes('user-cancelled')
-      ) {
-        try {
-          result = await signInWithPopup(auth, standardProvider);
-          const credential = GoogleAuthProvider.credentialFromResult(result);
-          token = credential?.accessToken || null;
-        } catch (standardErr: any) {
-          const standardCode = standardErr?.code || '';
-          if (
-            standardCode === 'auth/popup-closed-by-user' ||
-            standardCode === 'auth/user-cancelled' ||
-            standardCode === 'auth/cancelled-popup-request'
-          ) {
-            throw new Error(
-              'Sign-in was cancelled. Please select your Google account or use Email & Password.'
-            );
-          }
-          throw standardErr;
-        }
-      } else if (errCode === 'auth/popup-closed-by-user' || errCode === 'auth/cancelled-popup-request') {
-        throw new Error(
-          'Sign-in window was closed before completion. Please try again or use Email & Password.'
-        );
-      } else {
-        throw driveErr;
-      }
-    }
-
-    if (!result || !result.user) {
-      return null;
-    }
-
-    cachedAccessToken = token;
-    const email = (result.user.email || '').toLowerCase();
-
-    // Determine Role: Super Admin or Faculty Admin
-    const isSuperAdmin =
-      SUPER_ADMIN_EMAILS.some((e) => e.toLowerCase() === email) ||
-      email.includes('megaitdepartment');
-
-    let role: UserRole = 'faculty_admin';
-    let department = 'Academic Department';
-    let universityAffiliation: any = 'MEGA';
-
-    if (isSuperAdmin) {
-      role = 'super_admin';
-      department = 'Mega IT Department (Full Access)';
-    } else {
-      // Check if faculty admin was authorized by Super Admin
-      const facultyAccounts = getFacultyAccounts();
-      const match = facultyAccounts.find((f) => f.email.toLowerCase() === email);
-
-      if (!match) {
-        // If not pre-authorized, inform the user
-        throw new Error(
-          `Access restricted: The Google Account (${email}) has not been granted Faculty Admin access by the Super Admin yet.`
-        );
-      }
-
-      if (match.status === 'suspended') {
-        throw new Error('Your Faculty Admin account is suspended by Super Admin.');
-      }
-
-      department = match.department;
-      universityAffiliation = match.universityAffiliation;
-    }
-
-    const profile: UserProfile = {
-      id: result.user.uid,
-      name: result.user.displayName || (isSuperAdmin ? 'Super Admin' : 'Faculty Admin'),
-      email,
-      role,
-      avatar: result.user.photoURL || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80',
-      department,
-      universityAffiliation,
-      authMethod: 'google',
-      permissions: {
-        canUpload: true,
-        canEdit: true,
-        canDelete: role === 'super_admin',
-        canCopyCrossUniversity: true,
-        canManageUsers: role === 'super_admin',
-        canViewAnalytics: true,
-        canManageGoogleDrive: true,
-      },
-    };
-
-    setActiveSessionProfile(profile);
-    return { user: result.user, profile, accessToken: cachedAccessToken };
-  } catch (err: any) {
-    console.warn('Google Sign-In notice:', err?.message || err);
-    throw err;
-  } finally {
-    isSigningIn = false;
-  }
-};
-
 export const getAccessToken = async (): Promise<string | null> => {
   return cachedAccessToken;
 };
@@ -503,11 +362,6 @@ export const setAccessToken = (token: string | null) => {
 };
 
 export const logoutSession = async () => {
-  try {
-    await signOut(auth);
-  } catch (err) {
-    console.warn('Sign out error:', err);
-  }
   cachedAccessToken = null;
   setActiveSessionProfile(null);
 };
@@ -515,20 +369,7 @@ export const logoutSession = async () => {
 export const initAuthListener = (
   onAuthChange: (profile: UserProfile | null, token: string | null) => void
 ) => {
-  return onAuthStateChanged(auth, async (firebaseUser: User | null) => {
-    if (firebaseUser) {
-      const storedProfile = getActiveSessionProfile();
-      if (storedProfile && cachedAccessToken) {
-        onAuthChange(storedProfile, cachedAccessToken);
-      }
-    } else {
-      // If signed out of Google but logged in via password, keep session
-      const storedProfile = getActiveSessionProfile();
-      if (storedProfile && storedProfile.authMethod === 'password') {
-        onAuthChange(storedProfile, null);
-      } else {
-        onAuthChange(null, null);
-      }
-    }
-  });
+  const storedProfile = getActiveSessionProfile();
+  onAuthChange(storedProfile, cachedAccessToken);
+  return () => {};
 };
