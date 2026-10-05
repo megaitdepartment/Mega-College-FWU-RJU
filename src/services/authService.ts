@@ -13,7 +13,7 @@ import {
   signOut,
   User,
 } from 'firebase/auth';
-import firebaseConfig from '../../firebase-applet-config.json';
+import { firebaseConfig } from '../config/firebaseConfig';
 import { FacultyAdminAccount, UserProfile, UserRole } from '../types';
 
 // Initialize Firebase App
