@@ -22,7 +22,7 @@ export const ShareModal: React.FC<ShareModalProps> = ({
 
   const currentUrl = window.location.origin + window.location.pathname + '#resource=' + resource.id;
   const uniLabel = resource.university === 'RJU_BCA' ? 'RJU BCA' : resource.university;
-  const shareText = `📚 Check out ${resource.title} (${resource.code}) on Mega College Archive! Offline accessible: ${currentUrl}`;
+  const shareText = `📚 Check out ${resource.title} (${resource.code}) on Mega College Question Bank! Offline accessible: ${currentUrl}`;
 
   const handleCopyLink = async () => {
     try {

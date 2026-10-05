@@ -99,7 +99,7 @@ export const validateAllowedFileFormat = (
   if (!hasValidExt && !hasValidMime) {
     return {
       isValid: false,
-      error: `File format not allowed: "${file.name}". Only PDF and Image files (JPG, JPEG, PNG, WEBP) are supported for exam archives.`,
+      error: `File format not allowed: "${file.name}". Only PDF and Image files (JPG, JPEG, PNG, WEBP) are supported for exam papers.`,
     };
   }
 
@@ -249,7 +249,7 @@ export async function uploadToGoogleDrive(
       const metadata = {
         name: file.name,
         parents: [folderId],
-        description: `Official archive for ${university} ${program} ${formatSemesterFolderName(semester)} - Mega College`,
+        description: `Official question paper for ${university} ${program} ${formatSemesterFolderName(semester)} - Mega College`,
       };
 
       const form = new FormData();

@@ -1,6 +1,6 @@
 {
-  "name": "Mega College - FWU, RJU & BCA Old Questions & Academic Archive",
-  "description": "Structured academic archive, old questions repository, syllabus, model papers and CMS for Mega College, FWU B.Sc.CSIT, RJU B.Sc.CSIT, and BCA with offline access.",
+  "name": "Mega College - FWU, RJU & BCA Old Questions & Resource Repository",
+  "description": "Structured repository, old questions collection, syllabus, model papers and CMS for Mega College, FWU B.Sc.CSIT, RJU B.Sc.CSIT, and BCA with offline access.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

@@ -172,8 +172,8 @@ export const FacultyUserManagerModal: React.FC<FacultyUserManagerModalProps> = (
                       Root Governance
                     </span>
                   </div>
-                  <div className="text-[11px] text-slate-500 dark:text-slate-400 font-mono">
-                    Email: megaitdepartment@gmail.com
+                  <div className="text-[11px] text-slate-500 dark:text-slate-400 font-medium">
+                    Primary System Governance Administrator
                   </div>
                 </div>
               </div>
@@ -256,7 +256,7 @@ export const FacultyUserManagerModal: React.FC<FacultyUserManagerModalProps> = (
                     required
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    placeholder="e.g. Prof. Bikash Shrestha"
+                    placeholder="Enter faculty full name"
                     className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg px-2.5 py-1.5 text-xs outline-none"
                   />
                 </div>
@@ -268,7 +268,7 @@ export const FacultyUserManagerModal: React.FC<FacultyUserManagerModalProps> = (
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="e.g. faculty@megacollege.edu.np"
+                    placeholder="Enter official email address"
                     className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg px-2.5 py-1.5 text-xs outline-none"
                   />
                 </div>

@@ -43,7 +43,7 @@ export const OfflineLibraryView: React.FC<OfflineLibraryViewProps> = ({
           <button
             onClick={onBackToArchive}
             className="p-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:border-emerald-500/40 transition cursor-pointer shadow-2xs"
-            title="Back to Online Archive"
+            title="Back to Questions"
           >
             <ArrowLeft className="w-5 h-5" />
           </button>
@@ -107,7 +107,7 @@ export const OfflineLibraryView: React.FC<OfflineLibraryViewProps> = ({
           </div>
           <h3 className="text-base font-bold text-slate-900 dark:text-white">Your Offline Vault is Empty</h3>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
-            Browse the FWU B.Sc.CSIT, RJU B.Sc.CSIT, or RJU BCA archives and click <strong>"Save Offline"</strong> on any question paper or syllabus to access it here anytime.
+            Browse the FWU B.Sc.CSIT, RJU B.Sc.CSIT, or RJU BCA collection and click <strong>"Save Offline"</strong> on any question paper or syllabus to access it here anytime.
           </p>
           <button
             onClick={onBackToArchive}

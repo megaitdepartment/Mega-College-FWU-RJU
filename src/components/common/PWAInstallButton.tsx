@@ -22,7 +22,7 @@ export const PWAInstallButton: React.FC = () => {
       <button
         onClick={install}
         className="flex items-center gap-2 rounded-lg bg-gradient-to-r from-emerald-500 to-teal-600 px-3.5 py-1.5 text-xs font-semibold text-white shadow-md shadow-emerald-500/20 hover:from-emerald-600 hover:to-teal-700 transition cursor-pointer active:scale-95"
-        title="Install Mega College Archive App"
+        title="Install Mega College App"
       >
         <Download className="w-3.5 h-3.5" />
         <span className="hidden sm:inline">Install App</span>
@@ -73,7 +73,7 @@ export const PWAInstallButton: React.FC = () => {
                 </div>
                 <div className="flex items-start gap-2.5">
                   <span className="w-5 h-5 rounded-full bg-emerald-500 text-slate-950 font-bold flex items-center justify-center shrink-0 text-[10px]">3</span>
-                  <span>Launch <strong>Mega Archive</strong> for fast offline access!</span>
+                  <span>Launch <strong>Mega Portal</strong> for fast offline access!</span>
                 </div>
               </div>
 

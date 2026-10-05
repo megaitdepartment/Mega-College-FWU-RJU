@@ -1,8 +1,8 @@
 /**
- * Mega College Academic Archive
- * Official Structured Archive for FWU B.Sc.CSIT, RJU B.Sc.CSIT, and RJU BCA.
- * 2-Role RBAC: Super Admin & Faculty Admin (managed exclusively by Super Admin via Email & Password)
- * Google Drive Cloud Storage Integration: Mega Document Drive/{Course}/{Semester}/{Subject}/...
+ * Mega College Academic Resource Portal
+ * Official Question Bank & Syllabi for FWU B.Sc.CSIT, RJU B.Sc.CSIT, and RJU BCA.
+ * 2-Role Access: Super Admin & Faculty Admin (managed via Email & Password)
+ * Structured Storage Integration: Mega Document Repository/{Course}/{Semester}/{Subject}/...
  */
 
 import React, { useState, useEffect, useMemo } from 'react';
@@ -276,15 +276,15 @@ export default function App() {
     await logoutSession();
     setCurrentUser(null);
     if (currentView === 'cms') setCurrentView('archive');
-    addToast('info', 'Signed Out', 'You are now viewing the public student archive.');
+    addToast('info', 'Signed Out', 'You are now viewing the public student portal.');
   };
 
   const handleSaveUploadedResource = (newRes: Resource) => {
     setResources((prev) => [newRes, ...prev]);
     addToast(
       'success',
-      'Document Uploaded to Google Drive! 🚀',
-      `Organized into ${newRes.googleDrivePath || 'Mega Document Drive'}.`
+      'Document Uploaded! 🚀',
+      `Organized into ${newRes.googleDrivePath || 'Mega Document Repository'}.`
     );
   };
 
@@ -348,7 +348,7 @@ export default function App() {
     addToast(
       'success',
       'Document Cloned Cross-Course! 🚀',
-      `Adapted to ${targetUniversity === 'RJU_BCA' ? 'RJU BCA' : targetUniversity} Sem ${targetSemester} with updated Google Drive path!`
+      `Adapted to ${targetUniversity === 'RJU_BCA' ? 'RJU BCA' : targetUniversity} Sem ${targetSemester} with updated storage path!`
     );
   };
 
@@ -541,33 +541,15 @@ export default function App() {
           <div className="flex items-center gap-2">
             <span className="font-black text-slate-900 dark:text-white tracking-wider">MEGA COLLEGE</span>
             <span>•</span>
-            <span>FWU B.Sc.CSIT • RJU B.Sc.CSIT • RJU BCA Academic Archive</span>
+            <span>FWU B.Sc.CSIT • RJU B.Sc.CSIT • RJU BCA Question Bank</span>
           </div>
           <div className="flex items-center gap-4 text-slate-500 dark:text-slate-400">
-            <span className="flex items-center gap-1.5">
-              <span className="h-2 w-2 rounded-full bg-emerald-500"></span>
-              Google Drive Cloud Storage
-            </span>
-            <span>•</span>
-            <button
-              type="button"
-              onClick={() => trafficShield.activateSurge(1000, 5)}
-              className="text-xs text-teal-600 dark:text-teal-400 hover:underline flex items-center gap-1 cursor-pointer font-medium"
-              title="Test High Traffic Concurrency Queue (1,000 Visitors Simulation)"
-            >
-              <span>⚡ Test 1k Traffic Queue</span>
-            </button>
-            <span>•</span>
-            {currentUser ? (
-              <span className="font-semibold text-emerald-600 dark:text-emerald-400">
-                Logged in as {currentUser.role === 'super_admin' ? 'Super Admin' : 'Faculty Admin'}
-              </span>
-            ) : (
+            {!currentUser && (
               <button
                 onClick={() => setIsLoginOpen(true)}
                 className="text-emerald-700 dark:text-emerald-400 hover:underline cursor-pointer font-medium"
               >
-                Admin &amp; Faculty Login
+                Staff Portal Sign In
               </button>
             )}
           </div>

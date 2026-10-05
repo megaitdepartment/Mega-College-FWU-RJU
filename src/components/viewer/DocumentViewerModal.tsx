@@ -76,7 +76,7 @@ export const DocumentViewerModal: React.FC<DocumentViewerModalProps> = ({
     if (uni === 'FWU') return 'Far Western University';
     if (uni === 'RJU') return 'Rajarshi Janak University';
     if (uni === 'RJU_BCA') return 'Rajarshi Janak University (RJU BCA)';
-    return 'Mega College Official Archive';
+    return 'Mega College Official Repository';
   };
 
   return (
@@ -323,7 +323,7 @@ export const DocumentViewerModal: React.FC<DocumentViewerModalProps> = ({
                       </div>
                       {resource.googleDrivePath && (
                         <span className="text-[10px] font-mono text-emerald-600 bg-emerald-50 dark:bg-emerald-500/10 px-2 py-0.5 rounded">
-                          Google Drive Sync Ready
+                          Sync Ready
                         </span>
                       )}
                     </div>
@@ -394,7 +394,7 @@ export const DocumentViewerModal: React.FC<DocumentViewerModalProps> = ({
 
                   {/* Paper Footer Watermark */}
                   <div className="mt-8 pt-3 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between text-[9px] sm:text-[10px] text-slate-400 font-mono">
-                    <span>Mega College Archive • {resource.university === 'RJU_BCA' ? 'RJU BCA' : resource.university}</span>
+                    <span>Mega College • {resource.university === 'RJU_BCA' ? 'RJU BCA' : resource.university}</span>
                     <span>Page {currentPage} of {totalPages}</span>
                   </div>
                 </div>
@@ -427,13 +427,13 @@ export const DocumentViewerModal: React.FC<DocumentViewerModalProps> = ({
             {/* TAB 2: SOLUTIONS & REFERENCES (No step-by-step text questions) */}
             {activeTab === 'solutions' && (
               <div className="w-full max-w-2xl space-y-4 pb-8 text-xs">
-                {/* Google Drive Location Notice */}
+                {/* Location Notice */}
                 {resource.googleDrivePath && (
                   <div className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs space-y-2">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2 text-emerald-700 dark:text-emerald-400 font-bold">
                         <HardDrive className="w-4 h-4" />
-                        <span>Google Drive Structured Storage</span>
+                        <span>Structured Storage Path</span>
                       </div>
                       {resource.googleDriveWebViewLink && (
                         <a
@@ -442,7 +442,7 @@ export const DocumentViewerModal: React.FC<DocumentViewerModalProps> = ({
                           rel="noreferrer"
                           className="flex items-center gap-1 text-[11px] text-cyan-600 hover:underline font-semibold"
                         >
-                          <span>Open in Drive</span>
+                          <span>Open Document</span>
                           <ExternalLink className="w-3 h-3" />
                         </a>
                       )}

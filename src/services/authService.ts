@@ -1,5 +1,5 @@
 /**
- * Authentication Service for Mega College Academic Archive
+ * Authentication Service for Mega College Study Portal
  * Strictly 2 Roles: 'super_admin' and 'faculty_admin'
  * Email & Password authentication with session management and secure verification reset.
  * All credentials are user-managed with zero hardcoded passwords or API secrets.

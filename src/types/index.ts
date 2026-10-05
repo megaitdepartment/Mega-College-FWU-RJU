@@ -1,7 +1,7 @@
 /**
- * Types for Mega College Academic Archive
+ * Types for Mega College Academic Question Bank
  * Supporting FWU B.Sc.CSIT, RJU B.Sc.CSIT, and RJU BCA.
- * Restricted 2-role RBAC: Super Admin and Faculty Admin only.
+ * Restricted 2-role system: Super Admin and Faculty Admin only.
  */
 
 export type UniversityCode = 'FWU' | 'RJU' | 'RJU_BCA' | 'MEGA';

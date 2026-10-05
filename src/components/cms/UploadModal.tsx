@@ -236,7 +236,7 @@ export const UploadModal: React.FC<UploadModalProps> = ({
             </div>
             <div>
               <h3 className="text-base font-bold text-slate-900 dark:text-white">
-                Upload &amp; Categorize to Google Drive
+                Upload &amp; Categorize Document
               </h3>
               <p className="text-xs text-slate-500 dark:text-slate-400">
                 FWU B.Sc.CSIT • RJU B.Sc.CSIT • RJU BCA (Strictly PDF or JPG/JPEG/PNG only)
@@ -388,11 +388,11 @@ export const UploadModal: React.FC<UploadModalProps> = ({
             />
           </div>
 
-          {/* Google Drive Structured Path Indicator */}
+          {/* Structured Path Indicator */}
           <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-emerald-500/30 text-xs space-y-1">
             <div className="flex items-center gap-1.5 text-emerald-700 dark:text-emerald-400 font-bold">
               <HardDrive className="w-4 h-4" />
-              <span>Google Drive Folder Hierarchy Target:</span>
+              <span>Storage Folder Hierarchy Target:</span>
             </div>
             <div className="font-mono text-[11px] text-slate-600 dark:text-slate-300 break-all bg-white dark:bg-slate-900 p-2 rounded-lg border border-slate-200 dark:border-slate-800">
               {currentExpectedDrivePath}
@@ -539,7 +539,7 @@ export const UploadModal: React.FC<UploadModalProps> = ({
               disabled={isUploading}
               className="px-6 py-2 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 text-white dark:text-slate-950 text-xs font-bold hover:from-emerald-600 hover:to-teal-700 transition cursor-pointer shadow-md shadow-emerald-500/20 disabled:opacity-50"
             >
-              {isUploading ? 'Syncing to Google Drive...' : 'Upload & Categorize'}
+              {isUploading ? 'Uploading Document...' : 'Upload & Categorize'}
             </button>
           </div>
         </form>

@@ -37,7 +37,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         <div className="flex items-center justify-center mb-3 sm:mb-4">
           <div className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-3.5 py-1 rounded-full bg-emerald-100/80 dark:bg-emerald-500/10 border border-emerald-300 dark:border-emerald-500/30 text-emerald-800 dark:text-emerald-400 text-[11px] sm:text-xs font-semibold shadow-xs text-center">
             <Sparkles className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 animate-pulse shrink-0" />
-            <span className="truncate">Mega College Official Academic Archive &amp; Question Bank</span>
+            <span className="truncate">Mega College Official Question Bank &amp; Resource Portal</span>
           </div>
         </div>
 
@@ -50,7 +50,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             </span>
           </h1>
           <p className="mt-2.5 sm:mt-3.5 text-xs sm:text-base text-slate-600 dark:text-slate-300 max-w-2xl mx-auto font-normal leading-relaxed">
-            Curated repository of Far Western University (FWU) B.Sc.CSIT, Rajarshi Janak University (RJU) B.Sc.CSIT, and RJU BCA old questions, model sets, and verified video/web references organized in Google Drive.
+            Curated repository of Far Western University (FWU) B.Sc.CSIT, Rajarshi Janak University (RJU) B.Sc.CSIT, and RJU BCA old questions, model sets, and verified video/web references.
           </p>
         </div>
 
@@ -104,7 +104,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               Rajarshi Janak University
             </h3>
             <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
-              B.Sc.CSIT structured curriculum, past questions &amp; Google Drive archives.
+              B.Sc.CSIT structured curriculum, past questions &amp; verified materials.
             </p>
           </button>
 
@@ -122,7 +122,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           >
             <div className="flex items-center justify-between mb-2">
               <span className="text-xs font-bold px-2 py-0.5 rounded bg-indigo-100 dark:bg-indigo-500/15 text-indigo-800 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-500/30">
-                RJU BCA ARCHIVE
+                RJU BCA
               </span>
               <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 group-hover:translate-x-0.5 transition" />
             </div>
@@ -139,19 +139,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         <div className="mt-8 flex flex-wrap items-center justify-center gap-4 sm:gap-8 text-xs text-slate-600 dark:text-slate-400 font-medium">
           <div className="flex items-center gap-2">
             <CheckCircle className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-            <span>Structured Archive (Sem 1 to 8)</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <HardDrive className="w-4 h-4 text-teal-600 dark:text-teal-400" />
-            <span>Google Drive Structured Hierarchy</span>
+            <span>Complete Semesters (Sem 1 to 8)</span>
           </div>
           <div className="flex items-center gap-2">
             <Share2 className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />
             <span>Peer Deep-Linking &amp; QR Sharing</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <ShieldCheck className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
-            <span>Super Admin &amp; Faculty Admin RBAC</span>
           </div>
         </div>
       </div>

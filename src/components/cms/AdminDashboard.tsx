@@ -2,14 +2,9 @@ import React, { useState } from 'react';
 import {
   Layers,
   BarChart3,
-  Shield,
   Upload,
-  HardDrive,
   Users,
   ArrowLeft,
-  FolderTree,
-  ExternalLink,
-  CheckCircle2,
 } from 'lucide-react';
 import { AnalyticsSummary, Resource, UserProfile } from '../../types';
 import { ResourceManagementTable } from './ResourceManagementTable';
@@ -40,19 +35,19 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   onDeleteResource,
   onToggleStatus,
 }) => {
-  const [activeTab, setActiveTab] = useState<'resources' | 'drive' | 'analytics'>('resources');
+  const [activeTab, setActiveTab] = useState<'resources' | 'analytics'>('resources');
 
   const isSuperAdmin = currentUser.role === 'super_admin';
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
-      {/* Top Bar Header */}
+    <div className="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 w-full max-w-full min-w-0">
+      {/* Top Header & Fast Actions */}
       <div className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-slate-200 dark:border-slate-800">
         <div className="flex items-center gap-3">
           <button
             onClick={onBackToArchive}
             className="p-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:border-emerald-500/40 transition cursor-pointer shadow-2xs"
-            title="Back to Public Archive"
+            title="Back to Public Portal"
           >
             <ArrowLeft className="w-5 h-5" />
           </button>
@@ -73,7 +68,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               </span>
             </div>
             <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-              Google Drive Cloud Storage • FWU B.Sc.CSIT ↔ RJU B.Sc.CSIT ↔ RJU BCA
+              FWU B.Sc.CSIT ↔ RJU B.Sc.CSIT ↔ RJU BCA
             </p>
           </div>
         </div>
@@ -97,7 +92,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 text-white dark:text-slate-950 text-xs font-bold hover:from-emerald-600 hover:to-teal-700 transition cursor-pointer shadow-md shadow-emerald-500/20"
             >
               <Upload className="w-4 h-4" />
-              <span>Upload to Google Drive</span>
+              <span>Upload Document</span>
             </button>
           )}
         </div>
@@ -115,18 +110,6 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
         >
           <Layers className="w-4 h-4" />
           <span>Catalog &amp; Course Cloner ({resources.length})</span>
-        </button>
-
-        <button
-          onClick={() => setActiveTab('drive')}
-          className={`flex items-center gap-2 px-4 py-2 rounded-xl font-bold transition cursor-pointer shrink-0 ${
-            activeTab === 'drive'
-              ? 'bg-teal-600 text-white dark:bg-teal-500 dark:text-slate-950 shadow-xs'
-              : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800'
-          }`}
-        >
-          <HardDrive className="w-4 h-4" />
-          <span>Google Drive Structured Hierarchy</span>
         </button>
 
         <button
@@ -153,61 +136,6 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
           onDeleteResource={onDeleteResource}
           onToggleStatus={onToggleStatus}
         />
-      )}
-
-      {/* Google Drive Structure View */}
-      {activeTab === 'drive' && (
-        <div className="space-y-4">
-          <div className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3 shadow-xs">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <HardDrive className="w-5 h-5 text-emerald-600" />
-                <h3 className="font-bold text-sm text-slate-900 dark:text-white">
-                  Google Drive Structured Storage Architecture
-                </h3>
-              </div>
-              <span className="text-xs font-mono font-bold px-2.5 py-1 rounded-full bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-300 dark:border-emerald-500/30">
-                Root: Mega Document Drive
-              </span>
-            </div>
-
-            <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
-              All question papers, model sets, and syllabi are systematically organized into course-specific and semester-specific folders in Google Drive:
-            </p>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pt-2 text-xs">
-              <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-2">
-                <div className="font-bold text-emerald-700 dark:text-emerald-400">1. FWU B.Sc.CSIT</div>
-                <div className="font-mono text-[11px] text-slate-600 dark:text-slate-400 space-y-1">
-                  <div>📁 Mega Document Drive</div>
-                  <div>&nbsp;↳ 📁 FWU B.Sc.CSIT</div>
-                  <div>&nbsp;&nbsp;&nbsp;↳ 📁 1st semester to 8th semester</div>
-                  <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↳ 📁 Subject / Old Questions</div>
-                </div>
-              </div>
-
-              <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-2">
-                <div className="font-bold text-cyan-700 dark:text-cyan-400">2. RJU B.Sc.CSIT</div>
-                <div className="font-mono text-[11px] text-slate-600 dark:text-slate-400 space-y-1">
-                  <div>📁 Mega Document Drive</div>
-                  <div>&nbsp;↳ 📁 RJU B.Sc.CSIT</div>
-                  <div>&nbsp;&nbsp;&nbsp;↳ 📁 1st semester to 8th semester</div>
-                  <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↳ 📁 Subject / Old Questions</div>
-                </div>
-              </div>
-
-              <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-2">
-                <div className="font-bold text-indigo-700 dark:text-indigo-400">3. RJU BCA</div>
-                <div className="font-mono text-[11px] text-slate-600 dark:text-slate-400 space-y-1">
-                  <div>📁 Mega Document Drive</div>
-                  <div>&nbsp;↳ 📁 RJU BCA</div>
-                  <div>&nbsp;&nbsp;&nbsp;↳ 📁 1st semester to 8th semester</div>
-                  <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↳ 📁 Subject / Old Questions</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
       )}
 
       {activeTab === 'analytics' && (

@@ -220,7 +220,7 @@ export const CrossUniversityCopyModal: React.FC<CrossUniversityCopyModalProps> =
                 const sub = availableTargetSubjects.find((s) => s.id === e.target.value);
                 const uniLabel = targetUni === 'RJU_BCA' ? 'RJU BCA' : `${targetUni} B.Sc.CSIT`;
                 if (sub) {
-                  setCustomTitle(`${uniLabel} Sem ${targetSemester} ${sub.title} Exam Archive`);
+                  setCustomTitle(`${uniLabel} Sem ${targetSemester} ${sub.title} Exam Paper`);
                 }
               }}
               className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-200 outline-none"

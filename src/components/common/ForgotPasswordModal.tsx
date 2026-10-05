@@ -339,12 +339,12 @@ export const ForgotPasswordModal: React.FC<ForgotPasswordModalProps> = ({
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="e.g. megaitdepartment@gmail.com or faculty@..."
+                    placeholder="Enter your registered official email address"
                     className="w-full bg-transparent text-xs text-slate-900 dark:text-slate-100 outline-none font-medium placeholder:text-slate-400"
                   />
                 </div>
                 <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1.5 leading-relaxed">
-                  Enter the email address assigned by the Mega IT Super Admin. A single-use 6-digit cryptographic security code will be generated.
+                  Enter your registered official email address. A single-use 6-digit cryptographic security code will be generated.
                 </p>
               </div>
 
@@ -352,12 +352,10 @@ export const ForgotPasswordModal: React.FC<ForgotPasswordModalProps> = ({
               <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-[11px] text-slate-500 dark:text-slate-400 space-y-1.5">
                 <div className="font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
                   <Shield className="w-3.5 h-3.5 text-teal-600 dark:text-teal-400" />
-                  <span>Eligible Accounts in Registry:</span>
+                  <span>Security Verification:</span>
                 </div>
-                <div>• <strong>Super Admin:</strong> <code>megaitdepartment@gmail.com</code></div>
-                <div>• <strong>Faculty CSIT:</strong> <code>faculty.csit@megacollege.edu.np</code></div>
-                <div>• <strong>Faculty RJU BCA:</strong> <code>bca.lead@megacollege.edu.np</code></div>
-                <div>• Any custom faculty account provisioned in the CMS by the Super Admin.</div>
+                <div>• Passwords can only be reset for officially registered Super Admin and Faculty accounts.</div>
+                <div>• Single-use security codes expire after 15 minutes.</div>
               </div>
 
               <div className="pt-2 flex items-center justify-between gap-3">

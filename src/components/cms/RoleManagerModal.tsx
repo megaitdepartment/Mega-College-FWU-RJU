@@ -41,13 +41,13 @@ export const RoleManagerModal: React.FC<RoleManagerModalProps> = ({
       title: 'Super Admin (Mega IT Department)',
       badge: 'Master Governance',
       description:
-        'Complete authority over FWU B.Sc.CSIT, RJU B.Sc.CSIT, and RJU BCA curriculum, Google Drive structured folders, faculty admin provisioning via email & password, and analytics.',
+        'Complete authority over FWU B.Sc.CSIT, RJU B.Sc.CSIT, and RJU BCA curriculum, structured storage folders, faculty admin provisioning via email & password, and analytics.',
       color:
         'border-rose-300 dark:border-rose-500/40 bg-rose-50 dark:bg-rose-500/10 text-rose-800 dark:text-rose-300',
       permissions: [
         { label: 'Upload Documents & Questions (PDF or Image only)', allowed: true },
         { label: 'Provision Faculty Admins (Email & Password)', allowed: true },
-        { label: 'Manage Google Drive Structured Folder Hierarchy', allowed: true },
+        { label: 'Manage Organized Folder Hierarchy', allowed: true },
         { label: '1-Click Cross-University Course Clone', allowed: true },
         { label: 'Direct Publish & Delete Resources', allowed: true },
         { label: 'Access Deep Analytics & Audit Logs', allowed: true },
@@ -58,13 +58,13 @@ export const RoleManagerModal: React.FC<RoleManagerModalProps> = ({
       title: 'Faculty Admin (Subject Coordinator)',
       badge: 'Authorized by Super Admin',
       description:
-        'Access is granted by Super Admin only using official email and password. Can upload past questions (PDF or JPG/JPEG/PNG only) to Google Drive, provide reference & solution links, and manage curriculum.',
+        'Access is granted by Super Admin only using official email and password. Can upload past questions (PDF or JPG/JPEG/PNG only), provide reference & solution links, and manage curriculum.',
       color:
         'border-emerald-300 dark:border-emerald-500/40 bg-emerald-50 dark:bg-emerald-500/10 text-emerald-800 dark:text-emerald-300',
       permissions: [
         { label: 'Upload Documents & Questions (PDF or Image only)', allowed: true },
         { label: 'Attach Solution Links & Video Tutorials', allowed: true },
-        { label: 'Sync directly to structured Google Drive folder', allowed: true },
+        { label: 'Sync directly to structured folder repository', allowed: true },
         { label: '1-Click Cross-University Course Clone', allowed: true },
         { label: 'Access Analytics for Courses', allowed: true },
         { label: 'Manage & Provision User Accounts', allowed: false },

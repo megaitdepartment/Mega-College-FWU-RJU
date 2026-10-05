@@ -7,7 +7,7 @@ export const UNIVERSITIES: UniversityInfo[] = [
     fullName: 'Far Western University - B.Sc.CSIT',
     logoText: 'FWU CSIT',
     badgeColor: 'emerald',
-    description: 'B.Sc.CSIT syllabus, board examination questions, and curriculum archive for FWU.',
+    description: 'B.Sc.CSIT syllabus, board examination questions, and curriculum repository for FWU.',
     programs: ['BSc_CSIT'],
   },
   {
@@ -23,9 +23,9 @@ export const UNIVERSITIES: UniversityInfo[] = [
     id: 'RJU_BCA',
     name: 'RJU BCA',
     fullName: 'Rajarshi Janak University - Bachelor of Computer Application (RJU BCA)',
-    logoText: 'RJU BCA Hub',
+    logoText: 'RJU BCA',
     badgeColor: 'indigo',
-    description: 'Comprehensive RJU BCA questions, unit tests, model papers, and solved projects archive.',
+    description: 'Comprehensive RJU BCA questions, unit tests, model papers, and solved projects repository.',
     programs: ['BCA'],
   },
   {

@@ -77,10 +77,7 @@ export const Header: React.FC<HeaderProps> = ({
                 <div className="min-w-0">
                   <div className="flex items-center gap-1.5">
                     <span className="text-xs sm:text-base font-extrabold tracking-tight text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition truncate">
-                      MEGA ARCHIVE
-                    </span>
-                    <span className="hidden md:inline-flex text-[10px] font-bold px-1.5 py-0.5 rounded bg-emerald-100 dark:bg-emerald-500/15 text-emerald-800 dark:text-emerald-400 border border-emerald-300 dark:border-emerald-500/30">
-                      HUB
+                      MEGA PORTAL
                     </span>
                   </div>
                   <p className="text-[10px] text-slate-500 dark:text-slate-400 font-medium hidden lg:block truncate">

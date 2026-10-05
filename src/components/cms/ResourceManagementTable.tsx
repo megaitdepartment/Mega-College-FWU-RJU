@@ -198,7 +198,7 @@ export const ResourceManagementTable: React.FC<ResourceManagementTableProps> = (
                 </th>
                 <th className="py-3 px-4">Document Title</th>
                 <th className="py-3 px-4">Curriculum / Course</th>
-                <th className="py-3 px-4">Google Drive Storage</th>
+                <th className="py-3 px-4">Storage Path</th>
                 <th className="py-3 px-4">Year</th>
                 <th className="py-3 px-4">Status</th>
                 <th className="py-3 px-4 text-right">Actions</th>
@@ -263,7 +263,7 @@ export const ResourceManagementTable: React.FC<ResourceManagementTableProps> = (
                             </span>
                           </div>
                         ) : (
-                          <span className="text-slate-400">Local Archive</span>
+                          <span className="text-slate-400">Local Storage</span>
                         )}
                       </td>
                       <td className="py-3 px-4 font-mono font-bold text-slate-800 dark:text-slate-200">
